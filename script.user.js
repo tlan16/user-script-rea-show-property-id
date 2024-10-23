@@ -4,8 +4,14 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
+// @version      1.0
+// @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
+// @updateURL   https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
+// @downloadURL https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
+// @homepage    https://github.com/tlan16/user-script-rea-show-property-id
+// @supportURL  https://github.com/tlan16/user-script-rea-show-property-id
 // @grant        none
 // @run-at      document-idle
 // ==/UserScript==
