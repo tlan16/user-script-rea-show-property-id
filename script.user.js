@@ -4,7 +4,7 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.0
+// @version      1.1
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
@@ -22,8 +22,8 @@
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const getPropertyId = () => window?.utag?.data?.udo_backup?.property?.data?.property_id;
 
-    const displayPropertyId = (propertyId) => {
-        const container = document.querySelector(`body [class*="ddress-attributes__AddressAttributesContainer"]`);
+    const displayPropertyId = (propertyId, selector) => {
+        const container = document.querySelector(selector);
         if (!container) return;
         const div = document.createElement('div');
         div.style.padding = '10px';
@@ -41,7 +41,8 @@
         if (propertyId) {
             console.log({propertyId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
-            displayPropertyId(propertyId);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayPropertyId(propertyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
+            
             break;
         }
         await sleep(1000);
