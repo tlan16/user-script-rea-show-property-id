@@ -4,7 +4,7 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.2
+// @version      1.3
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -35,7 +35,6 @@
         const container = document.querySelector(selector);
         if (!container) return;
         const div = document.createElement('div');
-        div.style.padding = '10px';
         div.style.backgroundColor = 'rgba(0,0,0,0.5)';
         div.style.color = 'white';
         div.style.top = '0';
