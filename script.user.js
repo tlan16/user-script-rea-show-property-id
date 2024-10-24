@@ -44,7 +44,7 @@
             console.log({propertyId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayPropertyId(propertyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
-            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayPropertyId(propertyId, `body .property-info`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayPropertyId(propertyId, `body .property-info-address`);
             break;
         }
         await sleep(1000);
