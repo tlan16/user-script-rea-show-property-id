@@ -46,7 +46,7 @@
         container.appendChild(div);
     };
     let attempts = 0;
-    while (attempts <= 5) {
+    while (attempts <= 20) {
         attempts ++;
         const propertyId = getPropertyId();
         if (propertyId) {
