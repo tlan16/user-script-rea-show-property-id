@@ -4,10 +4,11 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.3
+// @version      1.4
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
+// @match        https://www.property.com.au/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
 // @updateURL    https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
 // @downloadURL  https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
@@ -53,6 +54,7 @@
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayPropertyId(propertyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
             if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayPropertyId(propertyId, `body .property-info-address`);
+            if (window.location.toString().startsWith('https://www.property.com.au/')) displayPropertyId(propertyId, `body [class*='PageHeaderContainer'] h1`);
             break;
         }
         await sleep(1000);
