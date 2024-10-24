@@ -40,6 +40,7 @@
         div.style.color = 'white';
         div.style.top = '0';
         div.style.left = '0';
+        div.style.fontSize = '1rem';
         div.textContent = `Property ID: ${propertyId}`;
         div.classList.add('we-property-id');
         container.appendChild(div);
