@@ -7,6 +7,7 @@
 // @version      1.2
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
+// @match        https://www.realestate.com.au/property*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
 // @updateURL    https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
 // @downloadURL  https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
