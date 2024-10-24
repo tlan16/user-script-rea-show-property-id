@@ -27,7 +27,7 @@
         propertyId = window?.utag?.data?.udo_backup?.property?.data?.property_id;
         if (propertyId) return propertyId;
         const element = document.querySelector(`body [class*='ListingMetricsWrapper'] > p`);
-        if (element.innerText.trim().startsWith(`Property ID`)) {
+        if (element?.innerText?.trim()?.startsWith(`Property ID`)) {
             return element.innerText.trim().split(' ')[2];
         }
     }
