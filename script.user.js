@@ -4,7 +4,7 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.4
+// @version      1.5
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
