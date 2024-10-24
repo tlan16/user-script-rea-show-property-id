@@ -4,7 +4,7 @@
 // @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.1
+// @version      1.2
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
@@ -42,7 +42,7 @@
             console.log({propertyId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayPropertyId(propertyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
-            
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayPropertyId(propertyId, `body .property-info`);
             break;
         }
         await sleep(1000);
