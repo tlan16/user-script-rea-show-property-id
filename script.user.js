@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name         REA - Show property id
 // @namespace    http://tampermonkey.net/
-// @version      2024-10-23
 // @description  Display property id
 // @author       Frank Lan
-// @version      1.5
+// @version      1.6
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -25,14 +24,15 @@
     const getPropertyId = () => {
         let propertyId = undefined;
         propertyId = window?.utag?.data?.udo_backup?.property?.data?.property_id;
-        if (propertyId) return propertyId;
-        const element = document.querySelector(`body [class*='ListingMetricsWrapper'] > p`);
-        if (element?.innerText?.trim()?.startsWith(`Property ID`)) {
-            return element.innerText.trim().split(' ')[2];
-        }
+        return propertyId;
+    }
+    const getListingId = () => {
+        let listingId = undefined;
+        listingId = window?.utag?.data?.udo_backup?.listing?.data?.listing_id;
+        return listingId;
     }
 
-    const displayPropertyId = (propertyId, selector) => {
+    const displayIds = (propertyId, listingId, selector) => {
         const container = document.querySelector(selector);
         if (!container) return;
         const div = document.createElement('div');
@@ -41,7 +41,10 @@
         div.style.top = '0';
         div.style.left = '0';
         div.style.fontSize = '1rem';
-        div.textContent = `Property ID: ${propertyId}`;
+        let textContent = '';
+        if (propertyId) textContent += `Property ID: ${propertyId}`;
+        if (listingId) textContent += `${propertyId ? ' ' : ''}Listing ID: ${listingId}`;
+        div.textContent = textContent;
         div.classList.add('we-property-id');
         container.appendChild(div);
     };
@@ -49,12 +52,13 @@
     while (attempts <= 20) {
         attempts ++;
         const propertyId = getPropertyId();
-        if (propertyId) {
-            console.log({propertyId});
+        const listingId = getListingId();
+        if (propertyId || listingId) {
+            console.log({propertyId, listingId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
-            if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayPropertyId(propertyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
-            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayPropertyId(propertyId, `body .property-info-address`);
-            if (window.location.toString().startsWith('https://www.property.com.au/')) displayPropertyId(propertyId, `body [class*='PageHeaderContainer'] h1`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, `body .property-info-address`);
+            if (window.location.toString().startsWith('https://www.property.com.au/')) displayIds(propertyId, listingId, `body [class*='PageHeaderContainer'] h1`);
             break;
         }
         await sleep(1000);
