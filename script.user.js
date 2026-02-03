@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.12
+// @version      1.13
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -78,7 +78,7 @@
             if (window.location.toString().startsWith('https://www.property.com.au/')) displayIds(propertyId, listingId, agencyId, `body [class*='PageHeaderContainer'] h1`);
             if (window.location.toString().startsWith('https://www.realestate.com.au/sold/')) displayIds(propertyId, listingId, agencyId, `body .details h1`);
         }
-        if (propertyId && listingId) break;
+        if (propertyId && agencyId && listingId) break;
         attempts ++;
         await sleep(1000);
     }
