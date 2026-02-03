@@ -36,7 +36,7 @@
     }
 
     const displayIds = (propertyId, listingId, selector) => {
-        const displayElementId = 'we-property-id-' + window.location.toString().replace(/\W/g, '')
+        const displayElementId = 'user-script-rea-show-property-id-' + window.location.toString().replace(/\W/g, '')
 
         const container = document.querySelector(selector);
         if (!container) return;
