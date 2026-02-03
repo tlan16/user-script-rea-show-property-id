@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name         REA - Show property id
+// @name         REA - Show property and listing id
 // @namespace    http://tampermonkey.net/
-// @description  Display property id
+// @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.6
+// @version      1.7
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
+// @match        https://www.realestate.com.au/sold/*
 // @match        https://www.property.com.au/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=realestate.com.au
 // @updateURL    https://github.com/tlan16/user-script-rea-show-property-id/raw/main/script.user.js
@@ -23,6 +24,8 @@
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const getPropertyId = () => {
         let propertyId = undefined;
+        propertyId = document.querySelector(`a[href^="https://www.property.com.au/"]`)?.href?.replace(/.+(?=pid-\d+)/, '')?.replace(/\D/g, '');
+        if (propertyId) return propertyId;
         propertyId = window?.utag?.data?.udo_backup?.property?.data?.property_id;
         return propertyId;
     }
@@ -33,19 +36,25 @@
     }
 
     const displayIds = (propertyId, listingId, selector) => {
+        const displayElementId = 'we-property-id-' + window.location.toString().replace(/\W/g, '')
+
         const container = document.querySelector(selector);
         if (!container) return;
+        document.getElementById(displayElementId)?.remove();
+
         const div = document.createElement('div');
+        div.id = displayElementId;
         div.style.backgroundColor = 'rgba(0,0,0,0.5)';
         div.style.color = 'white';
         div.style.top = '0';
         div.style.left = '0';
         div.style.fontSize = '1rem';
-        let textContent = '';
-        if (propertyId) textContent += `Property ID: ${propertyId}`;
-        if (listingId) textContent += `${propertyId ? ' ' : ''}Listing ID: ${listingId}`;
-        div.textContent = textContent;
-        div.classList.add('we-property-id');
+
+        let innerHTML = '';
+        if (propertyId) innerHTML += `Property ID: ${propertyId}`;
+        if (listingId) innerHTML += `<br/>${propertyId ? ' ' : ''}Listing ID: ${listingId}`;
+        div.innerHTML = innerHTML;
+
         container.appendChild(div);
     };
     let attempts = 0;
@@ -53,14 +62,16 @@
         attempts ++;
         const propertyId = getPropertyId();
         const listingId = getListingId();
+        console.log({propertyId, listingId})
         if (propertyId || listingId) {
             console.log({propertyId, listingId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
             if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, `body .property-info-address`);
             if (window.location.toString().startsWith('https://www.property.com.au/')) displayIds(propertyId, listingId, `body [class*='PageHeaderContainer'] h1`);
-            break;
+            if (window.location.toString().startsWith('https://www.realestate.com.au/sold/')) displayIds(propertyId, listingId, `body .details h1`);
         }
+        if (propertyId && listingId) break;
         await sleep(1000);
     }
 })();
