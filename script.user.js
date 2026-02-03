@@ -62,9 +62,9 @@
         attempts ++;
         const propertyId = getPropertyId();
         const listingId = getListingId();
-        console.log({propertyId, listingId})
+        console.verbose({propertyId, listingId})
         if (propertyId || listingId) {
-            console.log({propertyId, listingId});
+            console.verbose({propertyId, listingId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
             if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, `body .property-info-address`);
