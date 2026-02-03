@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.8
+// @version      1.9
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -52,7 +52,7 @@
 
         let innerHTML = '';
         if (propertyId) innerHTML += `Property ID: ${propertyId}`;
-        if (listingId) innerHTML += `<br/>${propertyId ? ' ' : ''}Listing ID: ${listingId}`;
+        if (listingId) innerHTML += `<br/>Listing ID: ${listingId}`;
         div.innerHTML = innerHTML;
 
         container.appendChild(div);
