@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.11
+// @version      1.12
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -34,8 +34,15 @@
         listingId = window?.utag?.data?.udo_backup?.listing?.data?.listing_id;
         return listingId;
     }
+    const getAgencyId = () => {
+        let agencyId = undefined;
+        agencyId = document.querySelector(`a[href^="https://www.realestate.com.au/agency/"]`)?.href?.replace(/https:\/\/www\.realestate\.com\.au\/agency\/\S+-(?=[A-Z]+)/, '');
+        agencyId = /^[A-Z]+/.exec(agencyId ?? '')?.[0]
+        if (agencyId) return agencyId;
+        return agencyId;
+    }
 
-    const displayIds = (propertyId, listingId, selector) => {
+    const displayIds = (propertyId, listingId, agencyId, selector) => {
         const displayElementId = 'user-script-rea-show-property-id-' + window.location.toString().replace(/\W/g, '')
 
         const container = document.querySelector(selector);
@@ -52,6 +59,7 @@
 
         let innerHTML = '';
         if (propertyId) innerHTML += `Property ID: ${propertyId}`;
+        if (agencyId) innerHTML += `<br/>Agency ID: ${agencyId}`;
         if (listingId) innerHTML += `<br/>Listing ID: ${listingId}`;
         div.innerHTML = innerHTML;
 
@@ -59,19 +67,19 @@
     };
     let attempts = 0;
     while (attempts <= 20) {
-        attempts ++;
         const propertyId = getPropertyId();
         const listingId = getListingId();
-        console.debug({propertyId, listingId})
-        if (propertyId || listingId) {
-            console.debug({propertyId, listingId});
+        const agencyId = getAgencyId();
+        console.debug({propertyId, listingId, agencyId})
+        if (propertyId || listingId || agencyId) {
             // Assumption: by the time property id is ready, the anchor element for display is ready too
-            if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
-            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, `body .property-info-address`);
-            if (window.location.toString().startsWith('https://www.property.com.au/')) displayIds(propertyId, listingId, `body [class*='PageHeaderContainer'] h1`);
-            if (window.location.toString().startsWith('https://www.realestate.com.au/sold/')) displayIds(propertyId, listingId, `body .details h1`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, agencyId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, agencyId, `body .property-info-address`);
+            if (window.location.toString().startsWith('https://www.property.com.au/')) displayIds(propertyId, listingId, agencyId, `body [class*='PageHeaderContainer'] h1`);
+            if (window.location.toString().startsWith('https://www.realestate.com.au/sold/')) displayIds(propertyId, listingId, agencyId, `body .details h1`);
         }
         if (propertyId && listingId) break;
+        attempts ++;
         await sleep(1000);
     }
 })();
