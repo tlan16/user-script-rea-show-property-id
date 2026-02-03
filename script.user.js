@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.7
+// @version      1.8
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
