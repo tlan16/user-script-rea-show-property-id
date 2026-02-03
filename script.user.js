@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @description  Display property id and listing id
 // @author       Frank Lan
-// @version      1.9
+// @version      1.10
 // @license      GPL-3.0 license
 // @match        https://www.realestate.com.au/property/*
 // @match        https://www.realestate.com.au/property*
@@ -62,9 +62,9 @@
         attempts ++;
         const propertyId = getPropertyId();
         const listingId = getListingId();
-        console.verbose({propertyId, listingId})
+        console.debug({propertyId, listingId})
         if (propertyId || listingId) {
-            console.verbose({propertyId, listingId});
+            console.debug({propertyId, listingId});
             // Assumption: by the time property id is ready, the anchor element for display is ready too
             if (window.location.toString().startsWith('https://www.realestate.com.au/property/')) displayIds(propertyId, listingId, `body [class*="ddress-attributes__AddressAttributesContainer"]`);
             if (window.location.toString().startsWith('https://www.realestate.com.au/property-')) displayIds(propertyId, listingId, `body .property-info-address`);
